@@ -1,0 +1,20 @@
+import React from 'react';
+import Button from './UI/button/Button';
+
+const PostsItem = (props) => {
+    return (
+        <div className="posts">
+            <div className="content">
+                <strong>
+                    {props.number}. {props.post.title}
+                </strong>
+                <div className="body">{props.post.body}</div>
+            </div>
+            <div className="btns">
+                <Button onClick={() => props.remove(props.post)}>Удалить</Button>
+            </div>
+        </div>
+    );
+};
+
+export default PostsItem;
