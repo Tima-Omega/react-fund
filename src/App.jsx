@@ -1,32 +1,46 @@
-import React, { useState } from 'react';
+
 import PostForm from './components/PostForm';
 import PostsList from './components/PostsList';
+import Select from './components/UI/select/Select';
+import { postService } from './services/posts.service';
+import { useForceUpdate } from './utils/forceUpdate';
 
 const App = () => {
-    const [posts, setPosts] = useState([
-        { id: 1, title: 'js', body: 'desc' },
-        { id: 2, title: 'js 2', body: 'desc' },
-        { id: 3, title: 'js 3', body: 'desc' },
-    ]);
-
+    const forceUpdate = useForceUpdate();
+    const posts = postService.get();
     const createPost = (newPost) => {
-        setPosts([...posts, newPost]);
+        postService.add(newPost);
+        forceUpdate();
     };
 
     const removePost = (post) => {
-        setPosts(posts.filter((p) => p.id !== post.id));
+        postService.remove(post);
+        forceUpdate();
     };
 
-    console.log(posts);
+    const sortPosts = (field) => {
+        postService.sort(field);
+        forceUpdate();
+    };
+
     return (
         <>
             <div className="app">
                 <PostForm create={createPost} />
-                {posts.length ? (
-                    <PostsList posts={posts} remove={removePost} title="Посты" />
-                ) : (
-                    <h1>Нет ничего</h1>
-                )}
+                <div>
+                    <Select
+                        onChange={sortPosts}
+                        defaultValue="title"
+                        options={[
+                            { value: 'title', name: 'название' },
+                            { value: 'body', name: 'описание' },
+                        ]}
+                    />
+                </div>
+                {posts.length
+                ? <PostsList posts={posts} remove={removePost} title="Посты" />
+                : <h1>Нет ничего</h1>
+                }
             </div>
         </>
     );

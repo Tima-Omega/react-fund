@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
 import Button from './UI/button/Button';
 import Input from './UI/input/Input';
 
@@ -7,6 +8,7 @@ const PostForm = ({ create }) => {
 
     const addNewPost = (e) => {
         e.preventDefault();
+
         const newPost = {
             ...post,
             id: Date.now(),
@@ -14,6 +16,7 @@ const PostForm = ({ create }) => {
         create(newPost);
         setPost({ title: '', body: '' });
     };
+
     return (
         <div>
             <form>
@@ -34,4 +37,5 @@ const PostForm = ({ create }) => {
         </div>
     );
 };
+
 export default PostForm;
