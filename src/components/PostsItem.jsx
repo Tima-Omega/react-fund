@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from './UI/button';
 
-const PostsItem = (props) => {
-    return (
+const PostsItem = (props) => (
         <div className="posts">
             <div className="content">
                 <strong>
@@ -15,6 +14,5 @@ const PostsItem = (props) => {
             </div>
         </div>
     );
-};
 
 export default PostsItem;

@@ -2,6 +2,9 @@ import React, { useState, useMemo } from 'react';
 import PostFilter from './components/PostFilter';
 import PostForm from './components/PostForm';
 import PostsList from './components/PostsList';
+import Select from './components/UI/select/Select';
+import { postService } from './services/posts.service';
+import { useForceUpdate } from './utils/forceUpdate';
 
 const App = () => {
     const [posts, setPosts] = useState([
@@ -27,11 +30,18 @@ const App = () => {
     }, [filter.query, sortedPosts]);
 
     const createPost = (newPost) => {
-        setPosts([...posts, newPost]);
+        postService.add(newPost);
+        forceUpdate();
     };
 
     const removePost = (post) => {
-        setPosts(posts.filter((p) => p.id !== post.id));
+        postService.remove(post);
+        forceUpdate();
+    };
+
+    const sortPosts = (field) => {
+        postService.sort(field);
+        forceUpdate();
     };
 
     return (

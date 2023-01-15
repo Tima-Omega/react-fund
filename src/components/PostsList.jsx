@@ -1,4 +1,3 @@
-import React from 'react';
 import PostsItem from './PostsItem';
 
 const PostsList = ({ posts, title, remove }) => {
