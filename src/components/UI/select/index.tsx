@@ -1,6 +1,16 @@
-import React from 'react';
+import { FC } from 'react';
 
-const Select = ({ options, defaultValue, value, onChange }) => {
+interface SelectProps {
+    options: {
+        value: string;
+        name: string;
+    }[];
+    defaultValue: string;
+    value: string;
+    onChange: (value: string) => void;
+}
+
+const Select: FC<SelectProps> = ({ options, defaultValue, value, onChange }) => {
     return (
         <select value={value} onChange={(e) => onChange(e.target.value)}>
             <option value="" disabled>

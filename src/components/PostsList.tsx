@@ -1,6 +1,15 @@
+import React, { FC } from 'react';
 import PostsItem from './PostsItem';
+import { Post } from '../types/Post';
+import { RemovePostFn } from '../types/RemovePostFn';
 
-const PostsList = ({ posts, title, remove }) => {
+interface PostsListProps {
+    posts: Post[];
+    remove: RemovePostFn;
+    title: string;
+}
+
+const PostsList: FC<PostsListProps> = ({ posts, title, remove }) => {
     if (!posts.length) return <h1>Нет постов</h1>;
     return (
         <div>
