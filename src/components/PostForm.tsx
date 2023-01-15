@@ -1,8 +1,10 @@
-import React, { FC, MouseEventHandler, useCallback, useState } from 'react';
 import Button from 'components/ui/button';
 import Input from 'components/ui/input';
-import { Post } from '../types/Post';
-import { CreatePostFn } from '../types/CreatePostFn';
+import type { FC, MouseEventHandler } from 'react';
+import { useCallback, useState } from 'react';
+
+import type { CreatePostFn } from '../types/CreatePostFn';
+import type { Post } from '../types/Post';
 
 interface PostFormProps {
     create: CreatePostFn;
@@ -18,6 +20,7 @@ export const PostForm: FC<PostFormProps> = ({ create }) => {
             if (!post.title || !post.body) {
                 return;
             }
+
             const newPost = {
                 ...post,
                 id: Date.now(),
@@ -27,6 +30,7 @@ export const PostForm: FC<PostFormProps> = ({ create }) => {
         },
         [post, create],
     );
+
     return (
         <div>
             <form>

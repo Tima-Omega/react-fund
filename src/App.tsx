@@ -1,14 +1,16 @@
-import { useState, useMemo } from 'react';
 import PostFilter from 'components/PostFilter';
 import { PostForm } from 'components/PostForm';
 import PostsList from 'components/PostsList';
-import Modal from 'components/ui/modal';
 import Button from 'components/ui/button';
-import { CreatePostFn } from './types/CreatePostFn';
-import { RemovePostFn } from './types/RemovePostFn';
-import { Filter } from './types/Filter';
+import Modal from 'components/ui/modal';
+import type { FC } from 'react';
+import { useMemo, useState } from 'react';
 
-const App = () => {
+import type { CreatePostFn } from './types/CreatePostFn';
+import type { Filter } from './types/Filter';
+import type { RemovePostFn } from './types/RemovePostFn';
+
+const App: FC = () => {
     const [posts, setPosts] = useState([
         { id: 1, title: 'js', body: 'desc' },
         { id: 2, title: 'js 2', body: 'desc' },
@@ -17,18 +19,21 @@ const App = () => {
 
     const [filter, setFilter] = useState<Filter>({ sortKey: 'id', query: '' });
 
+    const [show, setShow] = useState(false);
+
     const sortedPosts = useMemo(() => {
         if (filter.sortKey) {
             return [...posts].sort((a, b) =>
-                a[filter.sortKey].toString().localeCompare(b[filter.sortKey].toString()),
-            );
+                a[filter.sortKey].toString().localeCompare(b[filter.sortKey].toString()));
         }
+
         return posts;
     }, [filter.sortKey, posts]);
 
-    const sortedAndSearched = useMemo(() => {
-        return sortedPosts.filter((post) => post.title.toLowerCase().includes(filter.query));
-    }, [filter.query, sortedPosts]);
+    const sortedAndSearched = useMemo(
+        () => sortedPosts.filter((post) => post.title.toLowerCase().includes(filter.query)),
+        [filter.query, sortedPosts],
+    );
 
     const createPost: CreatePostFn = (newPost) => {
         setPosts([...posts, newPost]);
@@ -38,8 +43,6 @@ const App = () => {
     const removePost: RemovePostFn = (post) => {
         setPosts(posts.filter((p) => p.id !== post.id));
     };
-
-    const [show, setShow] = useState(false);
 
     return (
         <>

@@ -15,7 +15,15 @@
     },
     "rules": {
         "strict": "off",
-        "indent": "off",
+        "indent": [
+            "warn",
+            2,
+            {
+                "SwitchCase": 1,
+                "FunctionDeclaration": { "parameters": "first" },
+                "FunctionExpression": { "parameters": "first" }
+            }
+        ],
         "import/no-unresolved": "off"
     },
     "overrides": [
@@ -28,6 +36,20 @@
                 "sourceType": "module"
             },
             "rules": {
+                "@typescript-eslint/indent": [
+                    "warn",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "FunctionDeclaration": { "parameters": "first" },
+                        "FunctionExpression": { "parameters": "first" },
+                        "ignoredNodes": [
+                            "FunctionExpression > .params[decorators.length > 0]",
+                            "FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
+                            "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+                        ]
+                    }
+                ]
                 // "no-restricted-imports": [
                 //   "warn",
                 //   {
